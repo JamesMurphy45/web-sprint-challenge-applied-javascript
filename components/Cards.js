@@ -84,6 +84,11 @@ axios
     //content
     headLineDiv.textContent = obj.headline
     authorCardName.textContent = obj.authorName
+    //onClick Event
+    cardDiv.addEventListener('click', event =>{
+        console.log(headLineDiv.textContent)
+    })
+
     //dont forget to return
     return cardDiv
 }
