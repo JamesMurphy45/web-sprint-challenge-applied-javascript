@@ -20,3 +20,46 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+const cardsContainer = document.querySelector('.cards-container')
+
+axios
+    .get("https://lambda-times-api.herokuapp.com/articles")
+    .then((res)=>{
+        const article = res.data
+        const articleCard = cardMaker({
+            articleName: article.articles,
+            authorName: article.atticles.authorName,
+            authorPhoto: article.atticles.authorPhoto,
+            headline: article.atticles.headline})
+
+            cardsContainer.append(articleCard)
+        })
+    
+
+function cardMaker(articleName, authorName, authorPhoto, headline){
+    //Create Elms
+    const cardDiv = document.createElement('div')
+    const headLineDiv = document.createElement('div')
+    const authorDiv = document.createElement('div')
+    const imageContainer = document.createElement('div')
+    const authorImage = document.createElement('img')
+    const authorCardName = document.createElement('span')
+    //Placement
+    cardDiv.appendChild(headLineDiv)
+    cardDiv.appendChild(authorDiv)
+    authorDiv.appendChild(imageContainer)
+    imageContainer.appendChild(authorImage)
+    authorDiv.appendChild(authorCardName)
+    //Attrs
+    cardDiv.classList.add('card')
+    headLineDiv.classList.add('headline')
+    authorDiv.classList.add('author')
+    imageContainer.classList.add('img-container')
+    authorImage.src = null // not sure how to dot notate this
+
+    //content
+    headLineDiv.textContent = articleName
+    authorName.textContent = authorName
+    //dont forget to return
+    return cardDiv
+}
