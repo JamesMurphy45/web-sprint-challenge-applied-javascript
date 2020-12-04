@@ -25,18 +25,42 @@ const cardsContainer = document.querySelector('.cards-container')
 axios
     .get("https://lambda-times-api.herokuapp.com/articles")
     .then((res)=>{
-        const article = res.data
-        const articleCard = cardMaker({
-            articleName: article.articles,
-            authorName: article.atticles.authorName,
-            authorPhoto: article.atticles.authorPhoto,
-            headline: article.atticles.headline})
-
-            cardsContainer.append(articleCard)
+        //articles
+        const bootstrap = res.data.articles.bootstrap
+        const javascript = res.data.articles.javascript
+        const jquery = res.data.articles.jquery
+        const node = res.data.articles.node
+        const technology =res.data.articles.technology
+        
+        //forEach article iterate
+        bootstrap.forEach(item =>{
+            const articles = cardMaker(item)
+            cardsContainer.appendChild(articles)
         })
-    
+        javascript.forEach(item =>{
+            const articles = cardMaker(item)
+            cardsContainer.appendChild(articles)
+        })
+        jquery.forEach(item =>{
+            const articles = cardMaker(item)
+            cardsContainer.appendChild(articles)
+        })
+        node.forEach(item =>{
+            const articles = cardMaker(item)
+            cardsContainer.appendChild(articles)
+        })
+        technology.forEach(item =>{
+            const articles = cardMaker(item)
+            cardsContainer.appendChild(articles)
+        })
 
-function cardMaker(articleName, authorName, authorPhoto, headline){
+    })
+    .catch(err =>{
+      console.log(err)
+    })  
+
+
+    function cardMaker(obj){
     //Create Elms
     const cardDiv = document.createElement('div')
     const headLineDiv = document.createElement('div')
@@ -55,11 +79,12 @@ function cardMaker(articleName, authorName, authorPhoto, headline){
     headLineDiv.classList.add('headline')
     authorDiv.classList.add('author')
     imageContainer.classList.add('img-container')
-    authorImage.src = null // not sure how to dot notate this
+    authorImage.src = obj.authorPhoto
 
     //content
-    headLineDiv.textContent = articleName
-    authorName.textContent = authorName
+    headLineDiv.textContent = obj.headline
+    authorCardName.textContent = obj.authorName
     //dont forget to return
     return cardDiv
 }
+
